@@ -6,6 +6,7 @@ const initialState = {
   isAuthenticated: false,
   loading: false,
   error: null,
+  isSidebarOpen: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -23,7 +24,16 @@ export const loginUser = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = false;
+    },
+    setOpenSidebar: (state, action) => {
+      state.isSidebarOpen = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
@@ -42,5 +52,5 @@ const authSlice = createSlice({
       });
   },
 });
-
+export const { logout, setOpenSidebar } = authSlice.actions;
 export default authSlice.reducer;

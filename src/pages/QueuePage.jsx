@@ -4,6 +4,8 @@ import AddPAtientModel from "../components/patients/AddPAtientModel";
 import { addToQueue, getQueue } from "../store/reducers/queueSlice";
 import { Button } from "flowbite-react";
 import { getPatients } from "../store/reducers/patientSlice";
+import { fetchTickets } from "../store/reducers/ticketSlice";
+import AddPatientAppointment from "../components/patients/AddPatientAppointment";
 function QueuePAge() {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
@@ -14,6 +16,9 @@ function QueuePAge() {
   const handleAddToQueue = (patientId) => {
     dispatch(addToQueue(patientId));
   };
+  useEffect(() => {
+    dispatch(fetchTickets());
+  }, []);
   useEffect(() => {
     dispatch(getQueue());
     dispatch(getPatients());
@@ -86,7 +91,7 @@ function QueuePAge() {
           </ul>
         </div>
       </div>
-      <AddPAtientModel
+      <AddPatientAppointment
         show={showModal}
         handleClose={() => setShowModal(false)}
       />
